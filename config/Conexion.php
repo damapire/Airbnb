@@ -1,12 +1,15 @@
 <?php
 class Conexion {
     public static function conectar(){
-        // Cadena de conexión
-       // $conexion = new mysqli("localhost", "id20776342_root", "Dani_2525", "id20776342_airbnb");
-        $conexion = new mysqli("localhost", "root", "", "airbnb");
+        $host = getenv('DB_HOST');
+        $user = getenv('DB_USER');
+        $password = getenv('DB_PASSWORD');
+        $database = getenv('DB_NAME');
 
-        if (!$conexion) {
-            die("Conexión fallida: " . mysqli_connect_error());
+        $conexion = new mysqli($host, $user, $password, $database);
+
+        if ($conexion->connect_error) {
+            die("Conexión fallida: " . $conexion->connect_error);
         }
         return $conexion;
     }
